@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  nuxt-dev:
+    image: node:20
+    # 設定開發容器名稱
+    container_name: next-spotify
+    restart: "no"
+    # 指定工作目錄
+    working_dir: /root/next-spotify
+    volumes:
+      # 掛載根目錄下資料夾到容器中，用於持久化數據儲存
+      - ../:/root/next-spotify
+    # 安裝 pm2 及 持久化容器
+    command: sh -c "tail -f /dev/null"
