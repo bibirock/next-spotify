@@ -2,49 +2,50 @@
  * @Author: Joe.Chen
  * @Date: 2023-12-21 09:00:48
  * @LastEditors: Joe.Chen joechen@tracle-tw.com
- * @LastEditTime: 2023-12-21 09:42:45
+ * @LastEditTime: 2023-12-29 10:40:08
  * @Description: 
 */
 
 "use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-interface ListItemProps {
-  name: string;
+interface SquareProps {
+  value: string | null;
+  onSquareClick: () => {}
 }
 
-interface ItemProps {
-  items: string[]
+function Square({value , onSquareClick} : Readonly<SquareProps>) {
+  return <button className="square" onClick={onSquareClick}>{value}</button>;
 }
 
-function ListItem({ name }: Readonly<ListItemProps>) {
-  return <li>item { name }</li>
-}
+export default function Board() {
+  
+  const [squares, setSquares] = useState<string[]>(Array(9).fill(null));
 
-function List({ items }: Readonly<ItemProps>) {
-  return (
-    <ul>
-      {items.map((itemName, i) => (
-        <ListItem name={itemName} key={i}/>
-      ))}
-    </ul>
-  );
-}
-
-export default function Home() {
-  const [names, setNames] = useState(['foo', 'bar', 'fizz']);
-
-  const handleButtonClick = () => {
-    setNames([...names, 'foo']);
+  function handleClick() {
+    const nextSquares = squares.slice();
+    nextSquares[0] = "X";
+    setSquares(nextSquares);
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <List items={names}/>
-      <button onClick={handleButtonClick}>
-        Add foo item
-      </button>
-    </main>
+    <>
+      <div className="board-row">
+        <Square value={squares[0]}/>
+        <Square value={squares[1]}/>
+        <Square value={squares[2]}/>
+      </div>
+      <div className="board-row">
+        <Square value={squares[3]}/>
+        <Square value={squares[4]}/>
+        <Square value={squares[5]}/>
+      </div>
+      <div className="board-row">
+        <Square value={squares[6]}/>
+        <Square value={squares[7]}/>
+        <Square value={squares[8]}/>
+      </div>
+    </>
   )
 }
